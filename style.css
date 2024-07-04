@@ -18,7 +18,7 @@ body {
     background-color: #DFDFDF;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     gap: .5em;
     overflow-x: hidden;
@@ -82,6 +82,7 @@ body {
     justify-content: center;
     align-items: center;
     gap: .6em;
+    cursor: pointer;
     transition: all .3s ease;
 }
 
@@ -90,5 +91,131 @@ body {
 }
 
 #expense-form .form-btn {
-    background-color: #ED1250;
+    background-color: #DD1250;
+}
+
+#expense-form .form-btn:hover {
+    background-color: #FD1250;
+}
+
+.budget-calculator {
+    width: 100%;
+    height: 120px;
+    padding: .5em;
+    /* border: 1px solid #EE2B47; */
+    background-color: #1160AA;
+    box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.calc {
+    width: 30%;
+    height: 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.calc h2 {
+    font-size: 18px;
+    font-weight: 400;
+    text-align: center;
+}
+
+.calc p {
+    font-weight: 250;
+}
+
+.list-wrapper {
+    width: 100%;
+    padding: .5em;
+    /* border: 1px solid #EE2B47; */
+    background-color: #FFF7F7;
+    box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.list-title {
+    font-size: 20px;
+    padding: 0 1em;
+}
+
+#expense-list {
+    width: 100%;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: .5em;
+}
+
+.list-item {
+    width: 100%;
+    padding: 0.5em;
+    border-bottom: 1px solid #ccc;
+    border-left: 3px solid #1160AA;
+    list-style-type: none;
+    display: flex;
+    justify-content: space-between;
+}
+
+.list-item .name {
+    font-weight: 400;
+    width: 30%;
+}
+
+.list-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.edit-btn {
+    background-color: transparent;
+    border: none;
+    font-size: 17px;
+    color: #1160AA;
+    cursor: pointer;
+    transition: 0.2s all ease;
+}
+
+.remove-btn {
+    background-color: transparent;
+    border: none;
+    font-size: 17px;
+    color: #ED1250;
+    cursor: pointer;
+    transition: 0.2s all ease;
+}
+
+.edit-btn:hover, .remove-btn:hover {
+    scale: 1.1;
+}
+
+.reset-btn {
+    width: 100%;
+    padding: 1em;
+    font-size: 16px;
+    font-weight: 300;
+    border: none;
+    border-radius: 20px;
+    background-color: #204969;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, .4);
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: .6em;
+    transition: all .3s ease;
+    cursor: pointer;
 }
