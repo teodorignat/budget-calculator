@@ -1,3 +1,5 @@
+// Variables
+
 const incomeInput = document.querySelector('#income');
 const expenseNameInput = document.querySelector('#expense-name');
 const expenseAmountInput = document.querySelector('#expense-amount');
@@ -8,7 +10,12 @@ const expenseList = document.querySelector('#expense-list');
 const incomeFormTitle = document.querySelector('#income-form .form-title');
 const expenseFormTitle = document.querySelector('#expense-form .form-title');
 
+// State
+
 let editState = false;
+let isExpanded = true;
+
+// Functions
 
 const onAddIncome = (e) => {
     e.preventDefault();
@@ -111,7 +118,6 @@ function createButton (type) {
         icon.className = 'fa-sharp fa-solid fa-cancel';
     }
     
-    
     button.appendChild(icon);
     
     return button;
@@ -126,7 +132,9 @@ function expandForm (e) {
         control.style.display = 'flex';
     })
     
-    formCaret.style.transform = 'rotate(180deg)';
+    formCaret.style.transform = 'rotate(180)';
+
+    return isExpanded = true;
 }
 
 function collapseForm (e) {
@@ -138,6 +146,8 @@ function collapseForm (e) {
     })
 
     formCaret.style.transform = 'rotate(180deg)';
+
+    return isExpanded = false;
 }
 
 function createListElement (expenseName, expenseAmount) {
@@ -284,7 +294,6 @@ addIncomeBtn.addEventListener('click', onAddIncome);
 addExpenseBtn.addEventListener('click', onAddExpense);
 expenseList.addEventListener('click', onListItemClick);
 resetBtn.addEventListener('click', onReset)
-incomeFormTitle.addEventListener('click', collapseForm);
 
 checkUI();
 
