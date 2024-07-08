@@ -9,6 +9,7 @@ const resetBtn = document.querySelector('.reset-btn');
 const expenseList = document.querySelector('#expense-list');
 const incomeFormTitle = document.querySelector('#income-form .form-title');
 const expenseFormTitle = document.querySelector('#expense-form .form-title');
+const forms = document.querySelectorAll('.form');
 
 // State
 
@@ -124,32 +125,6 @@ function createButton (type) {
     
 }
 
-function expandForm (e) {
-    const formControls = e.target.parentElement.querySelectorAll('.form-control');
-    const formCaret = e.target.parentElement.querySelector('.form-title i');
-    
-    formControls.forEach(control => {
-        control.style.display = 'flex';
-    })
-    
-    formCaret.style.transform = 'rotate(180)';
-
-    return isExpanded = true;
-}
-
-function collapseForm (e) {
-    const formControls = e.target.parentElement.querySelectorAll('.form-control');
-    const formCaret = e.target.parentElement.querySelector('.form-title i');
-    
-    formControls.forEach(control => {
-        control.style.display = 'none';
-    })
-
-    formCaret.style.transform = 'rotate(180deg)';
-
-    return isExpanded = false;
-}
-
 function createListElement (expenseName, expenseAmount) {
     const listItem = document.createElement('li'); 
     listItem.className = 'list-item';
@@ -250,7 +225,7 @@ function editMode(state, item) {
         
         addExpenseBtn.classList.remove('edit');
         addExpenseBtn.firstChild.textContent = 'Add Expense'
-
+        
         cancelBtn.remove();
         
         listItems.forEach(item => {
@@ -258,10 +233,31 @@ function editMode(state, item) {
                 item.classList.remove('edit');
             }
         })
-
+        
         return editState = state;
     }
-    
+}
+
+function showHide (e) {
+    const formTitle = e.currentTarget.querySelector('h2');
+    const formTitleIcon = formTitle.querySelector('i');
+    const formControls = e.currentTarget.querySelector('.controls');
+   
+    if ( isExpanded && (e.target === formTitle || e.target === formTitleIcon)) {
+        formControls.classList.remove('show');
+        formControls.classList.add('hidden');
+        formTitleIcon.style.transform = 'rotate(0deg)';
+        clearInputs();
+
+        return isExpanded = false;
+    } else if (!isExpanded && (e.target === formTitle || e.target === formTitleIcon)) {
+        formControls.classList.remove('hidden');
+        formControls.classList.add('show');
+        formTitleIcon.style.transform = 'rotate(180deg)';
+        clearInputs();
+
+        return isExpanded = true;
+    }
 }
 
 function clearInputs() {
@@ -285,6 +281,7 @@ function checkUI() {
         expenseListWrapper.style.display = 'block';
     }
 
+
     return calculateBalance();
 }
 
@@ -293,7 +290,8 @@ function checkUI() {
 addIncomeBtn.addEventListener('click', onAddIncome);
 addExpenseBtn.addEventListener('click', onAddExpense);
 expenseList.addEventListener('click', onListItemClick);
-resetBtn.addEventListener('click', onReset)
+resetBtn.addEventListener('click', onReset);
+forms.forEach(form => form.addEventListener('click', showHide))
 
 checkUI();
 

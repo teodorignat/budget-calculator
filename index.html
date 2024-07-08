@@ -14,62 +14,6 @@
 </head>
 <body>
     <div class="container">
-        <form id="income-form" class="form">
-            <h2 class="form-title">
-                Income
-                <i class="fa-sharp fa-solid fa-caret-down"></i>
-            </h2>
-            <div class="form-control">
-                <input 
-                    type="number" 
-                    id="income" 
-                    class="form-input" 
-                    name="income" 
-                    placeholder="Enter income..."
-                />                
-            </div>
-            <div class="form-control">
-                <button class="form-btn" type="submit">
-                    Add income
-                    <i class="fa-sharp fa-solid fa-plus"></i>
-                </button>
-            </div>
-        </form>
-        <form id="expense-form" class="form">
-            <h2 class="form-title">
-                Expense
-                <i class="fa-sharp fa-solid fa-caret-down"></i>
-            </h2>
-            <div class="form-control">
-                <input 
-                    type="text" 
-                    id="expense-name" 
-                    class="form-input" 
-                    name="expense" 
-                    placeholder="Enter expense name..."
-                />                
-            </div>
-            <div class="form-control">
-                <input 
-                    type="number" 
-                    id="expense-amount" 
-                    class="form-input" 
-                    name="expense" 
-                    placeholder="Enter amount..."
-                />                
-            </div>
-            <div class="form-control">
-                <button class="form-btn" type="submit">
-                    Add expense
-                    <i class="fa-sharp fa-solid fa-minus"></i>
-                </button>
-                <!-- <button class="form-btn cancel" type="submit">
-                    Cancel
-                    <i class="fa-sharp fa-solid fa-cancel"></i>
-                </button> -->
-            </div>
-        </form>
-
         <div class="budget-calculator">
             <div class="calc total-budget">
                 <h2>Total Budget</h2>
@@ -84,6 +28,62 @@
                 <p>0</p>
             </div>
         </div>
+        <form id="income-form" class="form">
+            <h2 class="form-title">
+                Income
+                <i class="fa-sharp fa-solid fa-caret-down"></i>
+            </h2>
+            <div class="controls">
+                <div class="form-control">
+                    <input 
+                        type="number" 
+                        id="income" 
+                        class="form-input" 
+                        name="income" 
+                        placeholder="Income..."
+                    />                
+                </div>
+                <div class="form-control">
+                    <button class="form-btn" type="submit">
+                        Add income
+                        <i class="fa-sharp fa-solid fa-plus"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+        <form id="expense-form" class="form">
+            <h2 class="form-title">
+                Expense
+                <i class="fa-sharp fa-solid fa-caret-down"></i>
+            </h2>
+            <div class="controls">
+                <div class="form-control">
+                    <input 
+                        type="text" 
+                        id="expense-name" 
+                        class="form-input" 
+                        name="expense" 
+                        placeholder="Title..."
+                    />                
+                </div>
+                <div class="form-control">
+                    <input 
+                        type="number" 
+                        id="expense-amount" 
+                        class="form-input" 
+                        name="expense" 
+                        placeholder="Amount..."
+                    />                
+                </div>
+                <div class="form-control">
+                    <button class="form-btn" type="submit">
+                        Add expense
+                        <i class="fa-sharp fa-solid fa-minus"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+
 
         <div class="list-wrapper">
             <h2 class="list-title">Expense List</h2>
@@ -101,7 +101,7 @@
                     </div>
                 </li>
                 <li class="list-item">
-                    <h3 class="name">Gas</h3>
+                    <h3 class="name">Gas + Electricity</h3>
                     <p class="amount">100</p>
                     <div class="list-buttons">
                         <button class="edit-btn">

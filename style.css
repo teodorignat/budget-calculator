@@ -26,6 +26,7 @@ body {
 
 .form {
     width: 100%;
+    height: auto;
     padding: .5em 1em;
     /* border: 1px solid #EE2B47; */
     background-color: #FFF7F7;
@@ -46,7 +47,24 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    color: #1160aa;
     cursor: pointer;
+}
+
+.form-title i {
+    font-size: 25px;
+    transform: rotate(180deg);
+    transition: 0.5s all ease;
+}
+
+.controls {
+    width: 100%;
+    max-height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: .5em;
 }
 
 .form-control {
@@ -128,13 +146,14 @@ body {
 }
 
 .calc h2 {
-    font-size: 18px;
-    font-weight: 400;
+    font-size: 17px;
+    font-weight: 300;
     text-align: center;
 }
 
 .calc p {
-    font-weight: 250;
+    font-size: 20px;
+    font-weight: 650;
 }
 
 .list-wrapper {
@@ -178,6 +197,15 @@ body {
 .list-item .name {
     font-weight: 400;
     width: 30%;
+}
+
+.list-item .amount {
+    font-size: 18px;
+    font-weight: 500;
+    color: #DD1250;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .list-buttons {
@@ -242,4 +270,12 @@ body {
 
 .list-item.edit {
     background-color: rgba(17, 96, 170, 0.3);
+}
+
+.show {
+    display: flex;
+}
+
+.hidden {
+    display: none;
 }
