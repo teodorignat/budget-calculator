@@ -14,7 +14,8 @@ const forms = document.querySelectorAll('.form');
 // State
 
 let editState = false;
-let isExpanded = true;
+let isExpandedForm1 = true;
+let isExpandedForm2 = true;
 
 // Functions
 
@@ -43,9 +44,8 @@ const onAddExpense = (e) => {
         
         if (!editState) {
             
-            const listElement = createListElement(expenseName, expenseAmount);
-            
-            expenseList.appendChild(listElement);
+            addItemToDom(expenseName, expenseAmount);
+            addItemToStorage(expenseName, expenseAmount);
             clearInputs();
             
             return checkUI();
@@ -81,15 +81,21 @@ const onCancelBtn = (e) => {
 
 const onListItemClick = (e) => {
     if (e.target.classList.contains('fa-trash')) { 
-        removeItem(e.target.parentElement.parentElement.parentElement);
+        const listElement = e.target.parentElement.parentElement.parentElement;
+        const name = listElement.querySelector('.name');
+        removeItem(listElement);
+        removeItemFromStorage(name)
         return checkUI();
     } else if (e.target.classList.contains('fa-pen-to-square')) {
+        expand(true, forms[1]);
+
         const listItem = e.target.parentElement.parentElement.parentElement;
         const itemName = listItem.querySelector('.name').textContent;
         const itemAmount = listItem.querySelector('.amount').textContent;
         expenseNameInput.value = itemName;
         expenseAmountInput.value = itemAmount;
-        
+        expenseAmountInput.focus();
+
         return editMode(true, listItem);
     };
 }
@@ -100,6 +106,9 @@ const onReset = () => {
     if(confirm('Are you sure you want to reset everything?')) {
         totalBudget.textContent = '0';
         expenseList.innerHTML = '';
+        forms.forEach(form => expand(true, form));
+
+        localStorage.removeItem('expenses');
     }
 
     return checkUI();
@@ -148,9 +157,20 @@ function createListElement (expenseName, expenseAmount) {
     return listItem;
 }
 
+function addItemToDom(name, amount) {
+    const item = createListElement(name, amount);
+
+    expenseList.appendChild(item)
+
+    return
+}
+
 function removeItem(item) {
     if (confirm('Are you sure you want to delete this item?')) {
+        const itemName = item.querySelector('.name');
+
         item.remove();
+        return removeItemFromStorage(itemName);
     }
 }
 
@@ -243,21 +263,82 @@ function showHide (e) {
     const formTitleIcon = formTitle.querySelector('i');
     const formControls = e.currentTarget.querySelector('.controls');
    
+    let isExpanded = e.currentTarget.id === 'income-form' ? isExpandedForm1 : isExpandedForm2;
+
     if ( isExpanded && (e.target === formTitle || e.target === formTitleIcon)) {
         formControls.classList.remove('show');
         formControls.classList.add('hidden');
         formTitleIcon.style.transform = 'rotate(0deg)';
         clearInputs();
 
-        return isExpanded = false;
+        return e.currentTarget.id === 'income-form' ? isExpandedForm1 = false : isExpandedForm2 = false;
+
     } else if (!isExpanded && (e.target === formTitle || e.target === formTitleIcon)) {
         formControls.classList.remove('hidden');
         formControls.classList.add('show');
         formTitleIcon.style.transform = 'rotate(180deg)';
         clearInputs();
 
-        return isExpanded = true;
+        return e.currentTarget.id === 'income-form' ? isExpandedForm1 = true : isExpandedForm2 = true;
     }
+}
+
+function expand(state,form) {
+    const formTitle = form.querySelector('h2');
+    const formTitleIcon = formTitle.querySelector('i');
+    const formControls = form.querySelector('.controls');
+   
+    if (state) {
+        formControls.classList.remove('hidden');
+        formControls.classList.add('show');
+        formTitleIcon.style.transform = 'rotate(0deg)';
+        clearInputs();
+
+        return form.id === 'income-form' ? isExpandedForm1 = true : isExpandedForm2 = true;
+    } else {
+        formControls.classList.remove('show');
+        formControls.classList.add('hidden');
+        formTitleIcon.style.transform = 'rotate(180deg)';
+        clearInputs();
+        
+        return form.id === 'income-form' ? isExpandedForm1 = false : isExpandedForm2 = false;
+    }
+
+}
+
+// Local Storage
+
+function addItemToStorage(name, amount) {
+    const itemsFromStorage = getItemsFromStorage();
+
+    const item = {
+       name,
+       amount
+    };
+
+    itemsFromStorage.push(item);
+
+    return localStorage.setItem('expenses', JSON.stringify(itemsFromStorage));
+}
+
+function getItemsFromStorage() {
+    let itemsFromStorage;
+
+    if (localStorage.getItem('expenses') === null) {
+        itemsFromStorage = [];
+    } else {
+        itemsFromStorage = JSON.parse(localStorage.getItem('expenses'));
+    }
+
+     return itemsFromStorage;
+}
+
+function removeItemFromStorage(name) {
+    let itemsFromStorage = getItemsFromStorage();
+
+    itemsFromStorage = itemsFromStorage.filter(i => i.name !== name);
+
+    localStorage.setItem('expenses', JSON.stringify(itemsFromStorage));
 }
 
 function clearInputs() {
@@ -285,6 +366,12 @@ function checkUI() {
     return calculateBalance();
 }
 
+function displayItems() {
+    const itemsFromStorage = getItemsFromStorage();
+    itemsFromStorage.forEach(item => addItemToDom(item.name, item.amount));
+    checkUI();
+  }
+
 // Event Listeners
 
 addIncomeBtn.addEventListener('click', onAddIncome);
@@ -292,6 +379,7 @@ addExpenseBtn.addEventListener('click', onAddExpense);
 expenseList.addEventListener('click', onListItemClick);
 resetBtn.addEventListener('click', onReset);
 forms.forEach(form => form.addEventListener('click', showHide))
+document.addEventListener('DOMContentLoaded', displayItems)
 
 checkUI();
 
