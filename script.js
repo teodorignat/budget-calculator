@@ -5,7 +5,8 @@ const expenseNameInput = document.querySelector('#expense-name');
 const expenseAmountInput = document.querySelector('#expense-amount');
 const addIncomeBtn = document.querySelector('#income-form button');
 const addExpenseBtn = document.querySelector('#expense-form button');
-const resetBtn = document.querySelector('.reset-btn');
+const resetAppBtn = document.querySelector('#reset-app');
+const resetIncomeBtn = document.querySelector('#reset-income');
 const expenseList = document.querySelector('#expense-list');
 const incomeFormTitle = document.querySelector('#income-form .form-title');
 const expenseFormTitle = document.querySelector('#expense-form .form-title');
@@ -17,7 +18,7 @@ let editState = false;
 let isExpandedForm1 = true;
 let isExpandedForm2 = true;
 
-// Functions
+// Function Expression
 
 const onAddIncome = (e) => {
     e.preventDefault();
@@ -56,10 +57,12 @@ const onAddExpense = (e) => {
                 if (item.classList.contains('edit')) { 
                     const name = item.querySelector('.name');
                     const amount = item.querySelector('.amount');
+                    const oldName = name.textContent;
                     name.textContent = expenseName;
                     amount.textContent = expenseAmount;
                     clearInputs();
                     editMode(false)
+                    editItemFromStorage(oldName, expenseName, expenseAmount);
                     
                     return checkUI();
                 }
@@ -79,12 +82,38 @@ const onCancelBtn = (e) => {
 }
 
 
+
+const onResetApp = () => {
+    const totalBudget = document.querySelector('.total-budget p');
+    
+    if(confirm('Are you sure you want to reset everything?')) {
+        totalBudget.textContent = '0';
+        expenseList.innerHTML = '';
+        forms.forEach(form => expand(true, form));
+        
+        localStorage.removeItem('expenses');
+        localStorage.removeItem('budget');
+    }
+    
+    return checkUI();
+}
+
+const onResetIncome = () => {
+    const totalBudget = document.querySelector('.total-budget p');
+    
+    if (confirm('Reset the income to 0?')) {
+        totalBudget.textContent = '0';
+        return localStorage.removeItem('budget');
+    }
+    
+}
+
 const onListItemClick = (e) => {
     if (e.target.classList.contains('fa-trash')) { 
         const listElement = e.target.parentElement.parentElement.parentElement;
         const name = listElement.querySelector('.name');
         removeItem(listElement);
-        removeItemFromStorage(name)
+        removeItemFromStorage(name.textContent)
         return checkUI();
     } else if (e.target.classList.contains('fa-pen-to-square')) {
         expand(true, forms[1]);
@@ -100,19 +129,7 @@ const onListItemClick = (e) => {
     };
 }
 
-const onReset = () => {
-    const totalBudget = document.querySelector('.total-budget p');
-
-    if(confirm('Are you sure you want to reset everything?')) {
-        totalBudget.textContent = '0';
-        expenseList.innerHTML = '';
-        forms.forEach(form => expand(true, form));
-
-        localStorage.removeItem('expenses');
-    }
-
-    return checkUI();
-}
+// Function Declaration
 
 function createButton (type) {
     const button = document.createElement('button');
@@ -202,6 +219,7 @@ function addToTotalBudget (income) {
     const amount = parseFloat(totalBudget.textContent);
     
     totalBudget.textContent = `${amount + income}`;
+    setBudgetToStorage(parseFloat(income));
     
     return calculateBalance();
 }
@@ -341,6 +359,52 @@ function removeItemFromStorage(name) {
     localStorage.setItem('expenses', JSON.stringify(itemsFromStorage));
 }
 
+function editItemFromStorage(oldName, name, amount) {
+    let itemsFromStorage = getItemsFromStorage();
+
+    itemsFromStorage = itemsFromStorage.map(item => {
+        if (item.name === oldName) {
+            return {
+                name,
+                amount
+            }
+        } else {
+            return {
+                name: item.name,
+                amount: item.amount
+            }
+        }
+    })
+
+    return localStorage.setItem('expenses', JSON.stringify(itemsFromStorage));
+}
+
+function setBudgetToStorage(budget) {
+    let budgetFromStorage = getBudgetFromStorage();
+
+    budgetFromStorage += budget;
+
+    return localStorage.setItem('budget', JSON.stringify(budgetFromStorage));
+}
+
+function getBudgetFromStorage() {
+    let budgetFromStorage = localStorage.getItem('budget');
+
+    if (budgetFromStorage === null) {
+        budgetFromStorage = 0
+    } else {
+        budgetFromStorage = JSON.parse(budgetFromStorage);
+    }
+
+    return budgetFromStorage;
+}
+
+function resetAppBudget() {
+    const budgetFromStorage = getBudgetFromStorage();
+
+}
+// UI
+
 function clearInputs() {
     incomeInput.value = '';
     expenseAmountInput.value = '';
@@ -355,10 +419,10 @@ function checkUI() {
     if (!listItems.length) {
         expenseListWrapper.style.display = 'none';
         if (totalBudget === 0) {
-            resetBtn.style.display = 'none';
+            resetAppBtn.style.display = 'none';
         }
     } else {
-        resetBtn.style.display = 'block';
+        resetAppBtn.style.display = 'block';
         expenseListWrapper.style.display = 'block';
     }
 
@@ -368,18 +432,31 @@ function checkUI() {
 
 function displayItems() {
     const itemsFromStorage = getItemsFromStorage();
-    itemsFromStorage.forEach(item => addItemToDom(item.name, item.amount));
+    const totalBudget = document.querySelector('.total-budget p');
+
+    if (itemsFromStorage.length) {
+        itemsFromStorage.forEach(item => addItemToDom(item.name, item.amount));
+    }
+
+    totalBudget.textContent = `${getBudgetFromStorage()}`
+
     checkUI();
   }
 
-// Event Listeners
+// initialize app
 
-addIncomeBtn.addEventListener('click', onAddIncome);
-addExpenseBtn.addEventListener('click', onAddExpense);
-expenseList.addEventListener('click', onListItemClick);
-resetBtn.addEventListener('click', onReset);
-forms.forEach(form => form.addEventListener('click', showHide))
-document.addEventListener('DOMContentLoaded', displayItems)
+function init() {
+    addIncomeBtn.addEventListener('click', onAddIncome);
+    addExpenseBtn.addEventListener('click', onAddExpense);
+    expenseList.addEventListener('click', onListItemClick);
+    resetAppBtn.addEventListener('click', onResetApp);
+    resetIncomeBtn.addEventListener('click', onResetIncome);
+    forms.forEach(form => form.addEventListener('click', showHide))
+    document.addEventListener('DOMContentLoaded', displayItems)
+    
+    checkUI();
+}
 
-checkUI();
+init();
+
 
