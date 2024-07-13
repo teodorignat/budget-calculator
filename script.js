@@ -11,12 +11,13 @@ const expenseList = document.querySelector('#expense-list');
 const incomeFormTitle = document.querySelector('#income-form .form-title');
 const expenseFormTitle = document.querySelector('#expense-form .form-title');
 const forms = document.querySelectorAll('.form');
+const formControls = document.querySelectorAll('.controls');
 
 // State
 
 let editState = false;
-let isExpandedForm1 = true;
-let isExpandedForm2 = true;
+let isExpandedForm1 = false;
+let isExpandedForm2 = false;
 
 // Function Expression
 
@@ -210,7 +211,7 @@ function calculateBalance () {
     
     expenses.textContent = `${totalExpenses}`;
     
-    return balance.textContent = `${totalBudget - totalExpenses}`
+    return balance.textContent = `${(totalBudget - totalExpenses).toFixed(2)}`
     
 }
 
@@ -439,6 +440,8 @@ function displayItems() {
     }
 
     totalBudget.textContent = `${getBudgetFromStorage()}`
+
+    formControls.forEach(control => control.classList.add('hidden'));
 
     checkUI();
   }
