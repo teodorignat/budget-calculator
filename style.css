@@ -254,13 +254,14 @@ body {
     font-size: 20px;
     font-weight: 500;
     padding: 0 1em;
+    color: #000;
 }
 
 .list-item {
     width: 100%;
     padding: 0.5em;
     border-bottom: 1px solid #ccc;
-    border-left: 3px solid #555;
+    border-left: 3px solid rgba(224, 111, 111, 0.8);
     list-style-type: none;
     display: flex;
     justify-content: space-between;
@@ -290,7 +291,7 @@ body {
     background-color: transparent;
     border: none;
     font-size: 17px;
-    color: #555;
+    color: rgba(5, 139, 88, 0.7);
     cursor: pointer;
     transition: 0.2s all ease;
 }
@@ -327,7 +328,7 @@ body {
 }
 
 .list-item.edit {
-    background-color: rgba(17, 96, 170, 0.3);
+    background-color: rgba(5, 139, 88, 0.3);
 }
 
 .show {
