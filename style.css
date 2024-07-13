@@ -41,144 +41,6 @@ body {
     gap: 12vh;
 }
 
-.calc {
-    width: 100%;
-    height: 80px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-.calc.expenses {
-    width: 40%;
-    gap: .5em;
-}
-
-.calc.total-budget h2 {
-    font-size: 10px;
-    font-weight: 300;
-    text-align: center;
-}
-
-.calc.balance h2 {
-    font-size: 15px;
-    font-weight: 300;
-    text-align: center;
-}
-
-.calc.expenses h2 {
-    font-size: 13px;
-    font-weight: 300;
-    text-align: center;
-}
-
-.calc.total-budget p  {
-    font-size: 20px;
-    font-weight: 250;
-}
-
-.calc.balance p {
-    font-size: 50px;
-    font-weight: 650;
-}
-
-.calc.expenses p {
-    font-size: 16px;
-    font-weight: 440;
-    color: rgba(253, 18, 80, .7);
-}
-
-.list-wrapper {
-    width: 100%;
-    padding: .5em;
-    /* border: 1px solid #EE2B47; */
-    background-color: #FFF7F7;
-    box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.3);
-    border-radius: 10px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-}
-
-
-#expense-list {
-    width: 100%;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: .5em;
-}
-
-.list-header {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.list-title {
-    font-size: 20px;
-    font-weight: 500;
-    padding: 0 1em;
-}
-
-.list-item {
-    width: 100%;
-    padding: 0.5em;
-    border-bottom: 1px solid #ccc;
-    border-left: 3px solid #555;
-    list-style-type: none;
-    display: flex;
-    justify-content: space-between;
-}
-
-.list-item .name {
-    font-weight: 350;
-    width: 30%;
-}
-
-.list-item .amount {
-    font-size: 18px;
-    font-weight: 400;
-    color: rgba(221, 18, 80, .8);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.list-buttons {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.edit-btn {
-    background-color: transparent;
-    border: none;
-    font-size: 17px;
-    color: #555;
-    cursor: pointer;
-    transition: 0.2s all ease;
-}
-
-.remove-btn {
-    background-color: transparent;
-    border: none;
-    font-size: 17px;
-    color: rgba(237, 18, 80, 0.7);
-    cursor: pointer;
-    transition: 0.2s all ease;
-}
-
-.edit-btn:hover, .remove-btn:hover {
-    scale: 1.1;
-}
-
-
 .form {
     width: 100%;
     height: auto;
@@ -308,6 +170,142 @@ body {
 }
 #expense-form .edit:hover {
     background-color: #1160aa;
+}
+
+.calc {
+    width: 100%;
+    height: 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.calc.expenses {
+    width: 40%;
+    gap: .5em;
+}
+
+.calc.total-budget h2 {
+    font-size: 10px;
+    font-weight: 300;
+    text-align: center;
+}
+
+.calc.balance h2 {
+    font-size: 15px;
+    font-weight: 300;
+    text-align: center;
+}
+
+.calc.expenses h2 {
+    font-size: 13px;
+    font-weight: 300;
+    text-align: center;
+}
+
+.calc.total-budget p  {
+    font-size: 20px;
+    font-weight: 250;
+}
+
+.calc.balance p {
+    font-size: 50px;
+    font-weight: 650;
+}
+
+.calc.expenses p {
+    font-size: 16px;
+    font-weight: 440;
+    color: rgba(253, 18, 80, .7);
+}
+
+.list-wrapper {
+    width: 100%;
+    padding: .5em;
+    /* border: 1px solid #EE2B47; */
+    background-color: #FFF7F7;
+    box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+#expense-list {
+    width: 100%;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: .5em;
+}
+
+.list-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.list-title {
+    font-size: 20px;
+    font-weight: 500;
+    padding: 0 1em;
+}
+
+.list-item {
+    width: 100%;
+    padding: 0.5em;
+    border-bottom: 1px solid #ccc;
+    border-left: 3px solid #555;
+    list-style-type: none;
+    display: flex;
+    justify-content: space-between;
+}
+
+.list-item .name {
+    font-weight: 350;
+    width: 30%;
+}
+
+.list-item .amount {
+    font-size: 18px;
+    font-weight: 400;
+    color: rgba(221, 18, 80, .8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.list-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.edit-btn {
+    background-color: transparent;
+    border: none;
+    font-size: 17px;
+    color: #555;
+    cursor: pointer;
+    transition: 0.2s all ease;
+}
+
+.remove-btn {
+    background-color: transparent;
+    border: none;
+    font-size: 17px;
+    color: rgba(237, 18, 80, 0.7);
+    cursor: pointer;
+    transition: 0.2s all ease;
+}
+
+.edit-btn:hover, .remove-btn:hover {
+    scale: 1.1;
 }
 
 .reset-btn {

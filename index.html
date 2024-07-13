@@ -1,119 +1,118 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Budget App</title>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-    
-    <script src="https://kit.fontawesome.com/ad089776ca.js" crossorigin="anonymous"></script>
-</head>
-<body>
-    <div class="container">
-        <div class="budget-calculator">
-            <div class="calc total-budget">
-                <h2>Total budget</h2>
-                <p>0</p>
-            </div>
-            <div class="calc balance">
-                <h2>Your balance</h2>
-                <p>0</p>
-            </div>
-        </div>
-        <div class="list-wrapper">
-            <div class="list-header">
-                <h2 class="list-title">Expense List</h2>
-                <div class="calc expenses">
-                    <h2>Total expenses</h2> 
-                    <p class="total-expenses">0</p>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Budget App</title>
+        
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="style.css">
+        
+        <script src="https://kit.fontawesome.com/ad089776ca.js" crossorigin="anonymous"></script>
+    </head>
+    <body>
+        <div class="container">
+            <div class="budget-calculator">
+                <div class="calc total-budget">
+                    <h2>Total budget</h2>
+                    <p>0</p>
+                </div>
+                <div class="calc balance">
+                    <h2>Your balance</h2>
+                    <p>0</p>
                 </div>
             </div>
-            <ul id="expense-list">
-                <!-- <li class="list-item">
-                    <h3 class="name">Rent</h3>
-                    <p class="amount">500</p>
-                    <div class="list-buttons">
-                        <button class="edit-btn">
-                            <i class="fa-sharp fa-solid fa-pen-to-square"></i>
-                        </button>
-                        <button class="remove-btn">
-                            <i class="fa-sharp fa-solid fa-trash"></i>
+            <form id="income-form" class="form">
+                <h2 class="form-title">
+                    Add income
+                    <i class="fa-sharp fa-solid fa-caret-down"></i>
+                </h2>
+                <div class="controls">
+                    <div class="form-control">
+                        <input 
+                        type="number" 
+                        id="income" 
+                        class="form-input" 
+                        name="income" 
+                        placeholder="Income..."
+                        />                
+                    </div>
+                    <div class="form-control">
+                        <button class="form-btn" type="submit">
+                            Add
+                            <i class="fa-sharp fa-solid fa-plus"></i>
                         </button>
                     </div>
-                </li> -->
-            </ul>
+                </div>
+            </form>
+            <form id="expense-form" class="form">
+                <h2 class="form-title">
+                    Add expense
+                    <i class="fa-sharp fa-solid fa-caret-down"></i>
+                </h2>
+                <div class="controls">
+                    <div class="form-control">
+                        <input 
+                        type="text" 
+                        id="expense-name" 
+                        class="form-input" 
+                        name="expense" 
+                        placeholder="Title..."
+                        />                
+                    </div>
+                    <div class="form-control">
+                        <input 
+                        type="number" 
+                        id="expense-amount" 
+                        class="form-input" 
+                        name="expense" 
+                        placeholder="Amount..."
+                        />                
+                    </div>
+                    <div class="form-control">
+                        <button class="form-btn" type="submit">
+                            Add
+                            <i class="fa-sharp fa-solid fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+            <div class="list-wrapper">
+                <div class="list-header">
+                    <h2 class="list-title">Expense List</h2>
+                    <div class="calc expenses">
+                        <h2>Total expenses</h2> 
+                        <p class="total-expenses">0</p>
+                    </div>
+                </div>
+                <ul id="expense-list">
+                    <!-- <li class="list-item">
+                        <h3 class="name">Rent</h3>
+                        <p class="amount">500</p>
+                        <div class="list-buttons">
+                            <button class="edit-btn">
+                                <i class="fa-sharp fa-solid fa-pen-to-square"></i>
+                            </button>
+                            <button class="remove-btn">
+                                <i class="fa-sharp fa-solid fa-trash"></i>
+                            </button>
+                        </div>
+                    </li> -->
+                </ul>
+            </div>
+            
+            
+            <button id='reset-app' class="reset-btn">
+                Reset
+                <i class="fa-sharp fa-solid fa-arrows-rotate"></i>
+            </button>
+            <button id='reset-income' class="reset-btn">
+                Reset Income
+                <i class="fa-sharp fa-solid fa-arrows-rotate"></i>
+            </button>
         </div>
-        <form id="income-form" class="form">
-            <h2 class="form-title">
-                Add income
-                <i class="fa-sharp fa-solid fa-caret-down"></i>
-            </h2>
-            <div class="controls">
-                <div class="form-control">
-                    <input 
-                    type="number" 
-                    id="income" 
-                    class="form-input" 
-                    name="income" 
-                    placeholder="Income..."
-                    />                
-                </div>
-                <div class="form-control">
-                    <button class="form-btn" type="submit">
-                        Add
-                        <i class="fa-sharp fa-solid fa-plus"></i>
-                    </button>
-                </div>
-            </div>
-        </form>
-        <form id="expense-form" class="form">
-            <h2 class="form-title">
-                Add expense
-                <i class="fa-sharp fa-solid fa-caret-down"></i>
-            </h2>
-            <div class="controls">
-                <div class="form-control">
-                    <input 
-                    type="text" 
-                    id="expense-name" 
-                    class="form-input" 
-                    name="expense" 
-                    placeholder="Title..."
-                    />                
-                </div>
-                <div class="form-control">
-                    <input 
-                    type="number" 
-                    id="expense-amount" 
-                    class="form-input" 
-                    name="expense" 
-                    placeholder="Amount..."
-                    />                
-                </div>
-                <div class="form-control">
-                    <button class="form-btn" type="submit">
-                        Add
-                        <i class="fa-sharp fa-solid fa-minus"></i>
-                    </button>
-                </div>
-            </div>
-        </form>
-        
-        
-        <button id='reset-app' class="reset-btn">
-            Reset
-            <i class="fa-sharp fa-solid fa-arrows-rotate"></i>
-        </button>
-        <button id='reset-income' class="reset-btn">
-            Reset Income
-            <i class="fa-sharp fa-solid fa-arrows-rotate"></i>
-        </button>
-    </div>
-
-    <script src="script.js"></script>
-</body>
+        <script src="script.js"></script>
+    </body>
 </html>
