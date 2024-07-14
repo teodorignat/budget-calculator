@@ -26,7 +26,7 @@ body {
 
 .budget-calculator {
     width: 100%;
-    height: 60vh;
+    min-height: 60vh;
     padding: .5em;
     /* border: 1px solid #EE2B47; */
     background-color: rgba(224, 111, 111, 0.8);
@@ -41,12 +41,21 @@ body {
     gap: 12vh;
 }
 
+.forms {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: .5em;
+}
+
 .form {
     width: 100%;
     height: auto;
     padding: .5em 1em;
     /* border: 1px solid #EE2B47; */
-    background-color: #FFF7F7;
+    background-color: rgba(255, 247, 247, 0.8);
     box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.3);
     border-radius: 10px;
     display: flex;
