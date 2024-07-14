@@ -104,7 +104,8 @@ const onResetIncome = () => {
     
     if (confirm('Reset the income to 0?')) {
         totalBudget.textContent = '0';
-        return localStorage.removeItem('budget');
+        localStorage.removeItem('budget');
+        return calculateBalance();
     }
     
 }
