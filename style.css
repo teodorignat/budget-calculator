@@ -29,16 +29,15 @@ body {
     min-height: 60vh;
     padding: .5em;
     /* border: 1px solid #EE2B47; */
-    background-color: rgba(224, 111, 111, 0.8);
+    background-color: rgba(46, 100, 79, 0.7);
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
     backdrop-filter: blur(50px);
     border-radius: 10px;
     color: #fff;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: space-between;
     align-items: center;
-    gap: 12vh;
 }
 
 .forms {
@@ -192,6 +191,7 @@ body {
 
 .calc.expenses {
     width: 40%;
+    height: auto;
     gap: .5em;
 }
 
@@ -261,8 +261,8 @@ body {
 
 .list-title {
     font-size: 20px;
-    font-weight: 500;
-    padding: 0 1em;
+    font-weight: 400;
+    padding: 0 0.5em;
     color: #000;
 }
 
@@ -270,7 +270,7 @@ body {
     width: 100%;
     padding: 0.5em;
     border-bottom: 1px solid #ccc;
-    border-left: 3px solid rgba(224, 111, 111, 0.8);
+    border-left: 3px solid rgba(46, 100, 79, 0.5);
     list-style-type: none;
     display: flex;
     justify-content: space-between;
@@ -318,9 +318,18 @@ body {
     scale: 1.1;
 }
 
+.reset-controls {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: .2em;
+
+}
+
 .reset-btn {
     width: 100%;
-    padding: 1em;
+    padding: .7em;
     font-size: 16px;
     font-weight: 300;
     border: none;
