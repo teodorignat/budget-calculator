@@ -3,6 +3,7 @@
 const incomeInput = document.querySelector('#income');
 const expenseNameInput = document.querySelector('#expense-name');
 const expenseAmountInput = document.querySelector('#expense-amount');
+const categoryInput = document.querySelector('#category');
 const addIncomeBtn = document.querySelector('#income-form button');
 const addExpenseBtn = document.querySelector('#expense-form button');
 const resetAppBtn = document.querySelector('#reset-app');
@@ -12,13 +13,15 @@ const incomeFormTitle = document.querySelector('#income-form .form-title');
 const expenseFormTitle = document.querySelector('#expense-form .form-title');
 const forms = document.querySelectorAll('.form');
 const formControls = document.querySelectorAll('.controls');
+const selectOptions = forms[1].querySelector('select');
+
 
 // State
 
 let editState = false;
 let isExpandedForm1 = false;
 let isExpandedForm2 = false;
-
+let categories = [];
 // Function Expression
 
 const onAddIncome = (e) => {
@@ -38,17 +41,26 @@ const onAddIncome = (e) => {
 
 const onAddExpense = (e) => {
     e.preventDefault();
-    let expenseName = expenseNameInput.value;
+    let expenseName = expenseNameInput.value.trim();
     let expenseAmount = expenseAmountInput.value;
+    let categoryName = categoryInput.value.trim();
+    let selectCat = selectOptions.value;
+    categoryName = categoryName.charAt(0).toUpperCase() + categoryName.slice(1, categoryName.length); 
     expenseName = expenseName.charAt(0).toUpperCase() + expenseName.slice(1, expenseName.length); 
     
-    if (expenseName.length && expenseAmount.length) {
+    if (expenseName.length && expenseAmount.length && (selectCat !== 0 || categoryName.length)) {
         
         if (!editState) {
             
-            addItemToDom(expenseName, expenseAmount);
-            addItemToStorage(expenseName, expenseAmount);
-            clearInputs();
+            if (selectCat !== 0) {
+                addItemToDom(expenseName, expenseAmount, selectCat);
+                addItemToStorage(expenseName, expenseAmount, selectCat);
+                clearInputs();
+            } else {
+                addItemToDom(expenseName, expenseAmount, categoryName);
+                addItemToStorage(expenseName, expenseAmount, categoryName);
+                clearInputs();
+            }
             
             return checkUI();
         } else {
@@ -71,7 +83,7 @@ const onAddExpense = (e) => {
         }
         
     } else {
-        alert('Please, fill up both boxes in order to add an expense.');
+        alert('Please, fill up all the boxes in order to add an expense.');
     }
 }
 
@@ -176,12 +188,42 @@ function createListElement (expenseName, expenseAmount) {
     return listItem;
 }
 
-function addItemToDom(name, amount) {
+function createCategory(category) {
+    const div = document.createElement('div');
+    div.classList.add('category', `${category}`);
+
+    const categoryName = document.createElement('h2');
+    categoryName.classList.add('category-name');
+    categoryName.textContent = category;
+
+    const option = document.createElement('option');
+    option.textContent = category;
+    option.setAttribute('value', category);
+
+    selectOptions.appendChild(option);
+    div.appendChild(categoryName);
+
+    return div;
+}
+
+function addItemToDom(name, amount, categoryName) {
     const item = createListElement(name, amount);
-
-    expenseList.appendChild(item)
-
-    return
+    
+    if (categories.includes(categoryName)) {
+        const catElement = document.querySelector(`.category.${categoryName}`);
+        catElement.appendChild(item);
+    } else {
+        const categoryElement = createCategory(categoryName);
+        categoryElement.appendChild(item);  
+        expenseList.appendChild(categoryElement);
+        categories.push(categoryName);
+    }
+    
+    
+    
+    
+    
+    return;
 }
 
 function removeItem(item) {
@@ -244,7 +286,7 @@ function editMode(state, item) {
             formControl.appendChild(cancelBtn);
             
             addExpenseBtn.classList.add('edit');
-            addExpenseBtn.firstChild.textContent = 'Update'
+            addExpenseBtn.firstChild.textContent = 'Update';
         }
         
         item.classList.add('edit');
@@ -254,7 +296,6 @@ function editMode(state, item) {
                 item.classList.remove('edit');
             }
         })
-        
         
         return editState = state;
     } else {
@@ -289,7 +330,6 @@ function showHide (e) {
         formControls.classList.remove('show');
         formControls.classList.add('hidden');
         formTitleIcon.style.transform = 'rotate(0deg)';
-        clearInputs();
 
         return e.currentTarget.id === 'income-form' ? isExpandedForm1 = false : isExpandedForm2 = false;
 
@@ -297,7 +337,6 @@ function showHide (e) {
         formControls.classList.remove('hidden');
         formControls.classList.add('show');
         formTitleIcon.style.transform = 'rotate(180deg)';
-        clearInputs();
 
         return e.currentTarget.id === 'income-form' ? isExpandedForm1 = true : isExpandedForm2 = true;
     }
@@ -312,14 +351,12 @@ function expand(state,form) {
         formControls.classList.remove('hidden');
         formControls.classList.add('show');
         formTitleIcon.style.transform = 'rotate(0deg)';
-        clearInputs();
 
         return form.id === 'income-form' ? isExpandedForm1 = true : isExpandedForm2 = true;
     } else {
         formControls.classList.remove('show');
         formControls.classList.add('hidden');
         formTitleIcon.style.transform = 'rotate(180deg)';
-        clearInputs();
         
         return form.id === 'income-form' ? isExpandedForm1 = false : isExpandedForm2 = false;
     }
@@ -328,12 +365,13 @@ function expand(state,form) {
 
 // Local Storage
 
-function addItemToStorage(name, amount) {
+function addItemToStorage(name, amount, category) {
     const itemsFromStorage = getItemsFromStorage();
 
     const item = {
        name,
-       amount
+       amount,
+       category
     };
 
     itemsFromStorage.push(item);
@@ -437,7 +475,7 @@ function displayItems() {
     const totalBudget = document.querySelector('.total-budget p');
 
     if (itemsFromStorage.length) {
-        itemsFromStorage.forEach(item => addItemToDom(item.name, item.amount));
+        itemsFromStorage.forEach(item => addItemToDom(item.name, item.amount, item.category));
     }
 
     totalBudget.textContent = `${getBudgetFromStorage()}`
