@@ -48,19 +48,20 @@ const onAddExpense = (e) => {
     categoryName = categoryName.charAt(0).toUpperCase() + categoryName.slice(1, categoryName.length); 
     expenseName = expenseName.charAt(0).toUpperCase() + expenseName.slice(1, expenseName.length); 
     
-    if (expenseName.length && expenseAmount.length && (selectCat !== 0 || categoryName.length)) {
+    if (expenseName.length && expenseAmount.length && (categoryName.length || selectCat !== 'default')) {
         
         if (!editState) {
             
-            if (selectCat !== 0) {
-                addItemToDom(expenseName, expenseAmount, selectCat);
-                addItemToStorage(expenseName, expenseAmount, selectCat);
-                clearInputs();
-            } else {
-                addItemToDom(expenseName, expenseAmount, categoryName);
-                addItemToStorage(expenseName, expenseAmount, categoryName);
-                clearInputs();
-            }
+                if (selectCat !== 'default') {
+                    addItemToDom(expenseName, expenseAmount, selectCat);
+                    addItemToStorage(expenseName, expenseAmount, selectCat);
+                    clearInputs();
+                } else {
+                    addItemToDom(expenseName, expenseAmount, categoryName);
+                    addItemToStorage(expenseName, expenseAmount, categoryName);
+                    clearInputs();
+                }
+            
             
             return checkUI();
         } else {
@@ -223,6 +224,7 @@ function addItemToDom(name, amount, categoryName) {
     
     
     
+    // console.log(categories , categoryElement);
     return;
 }
 
@@ -448,7 +450,9 @@ function resetAppBudget() {
 function clearInputs() {
     incomeInput.value = '';
     expenseAmountInput.value = '';
-    expenseNameInput.value = ''
+    expenseNameInput.value = '';
+    categoryInput.value = '';
+    selectOptions.value = 'default';
 }
 
 function checkUI() {
