@@ -68,19 +68,41 @@ const onAddExpense = (e) => {
             const itemList = document.querySelectorAll('#expense-list .list-item');
             
             itemList.forEach(item => {
-                if (item.classList.contains('edit')) { 
+                if (item.classList.contains('edit')) {
                     const name = item.querySelector('.name');
                     const amount = item.querySelector('.amount');
                     const oldName = name.textContent;
-                    name.textContent = expenseName;
-                    amount.textContent = expenseAmount;
-                    clearInputs();
-                    editMode(false)
-                    editItemFromStorage(oldName, expenseName, expenseAmount);
+                    const currentCat = item.parentElement.querySelector('.category-name').textContent;
+                    if (categories.includes(`${selectCat !== 'default' ? selectCat : categoryName}`) && currentCat === `${selectCat !== 'default' ? selectCat : categoryName}`) {
+                        name.textContent = expenseName;
+                        amount.textContent = expenseAmount;
+                        clearInputs();
+                        editMode(false);
+                        editItemFromStorage(oldName, expenseName, expenseAmount, `${selectCat !== 'default' ? selectCat : categoryName}`);
+                        
+                        return checkUI();
+                    } else if (currentCat !== `${selectCat !== 'default' ? selectCat : categoryName}`) {
+                        const catListEl = item.parentElement.querySelectorAll('li');
+                         
+                        if(catListEl.length > 1) {
+                            item.remove();
+                        } else {
+                            item.parentElement.remove();
+                        }
+
+                        addItemToDom(expenseName, expenseAmount, `${selectCat !== 'default' ? selectCat : categoryName}`)
+                        
+                        clearInputs();
+                        editMode(false);
+                        editItemFromStorage(oldName, expenseName, expenseAmount, `${selectCat !== 'default' ? selectCat : categoryName}`);
+                        
+                        return checkUI();
+                    }
                     
-                    return checkUI();
                 }
-            })
+                })
+
+
         }
         
     } else {
@@ -136,8 +158,10 @@ const onListItemClick = (e) => {
         const listItem = e.target.parentElement.parentElement.parentElement;
         const itemName = listItem.querySelector('.name').textContent;
         const itemAmount = listItem.querySelector('.amount').textContent;
+        const itemCategory = listItem.parentElement.querySelector('.category-name').textContent;
         expenseNameInput.value = itemName;
         expenseAmountInput.value = itemAmount;
+        selectOptions.value = itemCategory;
         expenseAmountInput.focus();
 
         return editMode(true, listItem);
@@ -191,8 +215,8 @@ function createListElement (expenseName, expenseAmount) {
 
 function createCategory(category) {
     const div = document.createElement('div');
+    console.log(category);
     div.classList.add('category', `${category}`);
-
     const categoryName = document.createElement('h2');
     categoryName.classList.add('category-name');
     categoryName.textContent = category;
@@ -401,19 +425,21 @@ function removeItemFromStorage(name) {
     localStorage.setItem('expenses', JSON.stringify(itemsFromStorage));
 }
 
-function editItemFromStorage(oldName, name, amount) {
+function editItemFromStorage(oldName, name, amount, category) {
     let itemsFromStorage = getItemsFromStorage();
 
     itemsFromStorage = itemsFromStorage.map(item => {
         if (item.name === oldName) {
             return {
                 name,
-                amount
+                amount,
+                category
             }
         } else {
             return {
                 name: item.name,
-                amount: item.amount
+                amount: item.amount,
+                category: item.category
             }
         }
     })
