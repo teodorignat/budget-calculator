@@ -73,15 +73,11 @@ const onAddExpense = (e) => {
                     const amount = item.querySelector('.amount');
                     const oldName = name.textContent;
                     const currentCat = item.parentElement.querySelector('.category-name').textContent;
-                    if (categories.includes(`${selectCat !== 'default' ? selectCat : categoryName}`) && currentCat === `${selectCat !== 'default' ? selectCat : categoryName}`) {
+
+                    if (currentCat === `${selectCat !== 'default' ? selectCat : categoryName}`) {
                         name.textContent = expenseName;
                         amount.textContent = expenseAmount;
-                        clearInputs();
-                        editMode(false);
-                        editItemFromStorage(oldName, expenseName, expenseAmount, `${selectCat !== 'default' ? selectCat : categoryName}`);
-                        
-                        return checkUI();
-                    } else if (currentCat !== `${selectCat !== 'default' ? selectCat : categoryName}`) {
+                    } else {
                         const catListEl = item.parentElement.querySelectorAll('li');
                          
                         if(catListEl.length > 1) {
@@ -92,17 +88,16 @@ const onAddExpense = (e) => {
 
                         addItemToDom(expenseName, expenseAmount, `${selectCat !== 'default' ? selectCat : categoryName}`)
                         
-                        clearInputs();
-                        editMode(false);
-                        editItemFromStorage(oldName, expenseName, expenseAmount, `${selectCat !== 'default' ? selectCat : categoryName}`);
-                        
-                        return checkUI();
                     }
+
+                    clearInputs();
+                    editMode(false);
+                    editItemFromStorage(oldName, expenseName, expenseAmount, `${selectCat !== 'default' ? selectCat : categoryName}`);
+                    
+                    return checkUI();
                     
                 }
                 })
-
-
         }
         
     } else {
@@ -303,7 +298,7 @@ function editMode(state, item) {
         const icon = addExpenseBtn.querySelector('i');
         const checkedItems = listItems.filter(itm => itm !== item);
         
-        
+        categoryInput.style.display = 'none';
         icon.classList.remove('fa-minus');
         icon.classList.add('fa-pen-to-square');
         
