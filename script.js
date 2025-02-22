@@ -52,7 +52,7 @@ const onAddExpense = (e) => {
         
         if (!editState) {
             
-                if (selectCat !== 'default') {
+                if (selectCat !== 'default' && !categoryName.length) {
                     addItemToDom(expenseName, expenseAmount, selectCat);
                     addItemToStorage(expenseName, expenseAmount, selectCat);
                     clearInputs();
@@ -324,6 +324,7 @@ function editMode(state, item) {
         const cancelBtn = formControl.querySelector('button:last-child')
         icon.classList.remove('fa-pen-to-square');
         icon.classList.add('fa-minus');
+        categoryInput.style.display = 'flex';
         
         addExpenseBtn.classList.remove('edit');
         addExpenseBtn.firstChild.textContent = 'Add Expense'
